@@ -1,0 +1,14 @@
+name: LeetCode Stats Update
+on:
+  schedule:
+    - cron: '0 12 * * *' # Update daily at 12 PM UTC
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: JS-Hao/leetcode-stats@main
+        with:
+          username: sanathkavatooru
+          filename: README.md
