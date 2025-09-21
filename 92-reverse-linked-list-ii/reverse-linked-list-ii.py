@@ -17,6 +17,7 @@ class Solution:
         
         prev = None
         nex = None
+        tail = temp
         for i in range(left, right + 1):
             nex = temp.next
             temp.next = prev
@@ -28,10 +29,6 @@ class Solution:
         else:
             l = prev
         
-
-        if nex != None:
-            while(l.next != None):
-                l = l.next
             
-            l.next = nex
+        tail.next = nex
         return prev if left==1 else head
