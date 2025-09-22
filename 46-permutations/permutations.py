@@ -1,21 +1,16 @@
 class Solution:
     def permute(self, nums: List[int]) -> List[List[int]]:
         output = []
-        n = len(nums)
-        visited = [0 for _ in range(n)]
 
         def dfs(arr):
-            if len(arr) == n:
+            if len(arr) == len(nums):
                 output.append(arr.copy())
-            
-            
-            for num in nums:
-                if num not in arr:
-                    arr.append(num)
+                return
+            for i in nums:
+                if i not in arr:
+                    arr.append(i)
                     dfs(arr)
                     arr.pop()
-  
         dfs([])
 
         return output
-            
