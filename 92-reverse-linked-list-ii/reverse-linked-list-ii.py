@@ -6,29 +6,50 @@
 class Solution:
     def reverseBetween(self, head: Optional[ListNode], left: int, right: int) -> Optional[ListNode]:
         
-        if left == right or head == None:
+        if left == right:
             return head
+        
+        dummy = ListNode(0)
+        dummy.next = head
+        
+        temp = dummy
 
-        temp = head
-        l = None
         for i in range(left - 1):
-            l = temp
             temp = temp.next
         
-        prev = None
-        nex = None
-        tail = temp
-        for i in range(left, right + 1):
-            nex = temp.next
-            temp.next = prev
-            prev = temp
-            temp = nex
+        l = temp
+        curr = temp.next
+        l.next = None
+
+        end = curr
+        for i in range(right - left):
+            end = end.next
         
-        if l != None:
-            l.next = prev
-        else:
-            l = prev
+        tail = end.next
+
+        end.next = None
+
+        # print(l, curr, tail)
+
         
+        
+        revers = self.reverseList(curr)
+
+        print(revers)
+
+        l.next = revers
+        print(l, curr)
+        curr.next = tail
+        
+        return dummy.next
+    
+    def reverseList(self, head):
+            prev = None
+            temp = head
+            while(temp):
+                nex = temp.next
+                temp.next = prev
+                prev = temp
+                temp = nex
             
-        tail.next = nex
-        return prev if left==1 else head
+            return prev
