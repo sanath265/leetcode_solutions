@@ -5,50 +5,53 @@
 #         self.next = next
 class Solution:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-
-        if k <= 1 or head is None:
-            return head
         
         dummy = ListNode(0)
-        prev = dummy
-        prev.next = head
+        dummy.next = head
 
         temp = head
-        end = head
+
+        prev = dummy
 
         while(temp):
+            curr = temp
+            end = temp
+
             count = 1
-            while(end.next and count < k):
+
+            while(count < k and end.next):
                 count += 1
                 end = end.next
+            
             if count != k:
                 return dummy.next
-
-            prev.next = None
+            
             tail = end.next
             end.next = None
+            prev.next = None
+            # print(curr, end, tail)
 
-            print(temp, end)
+            end = self.reverseList(curr)
 
-            prevSmall = None
-            curr = temp
-            while(curr):
-                nex = curr.next
-                curr.next = prevSmall
-                prevSmall = curr
-                curr = nex
-            
-            print(temp, prevSmall)
-            
-            prev.next = prevSmall
-            temp.next = tail
+            # print(curr, end)
 
-            prev = temp
-            temp = temp.next
-            end = temp
+            prev.next = end
+            curr.next = tail
+
+            temp = tail
+            prev = curr
         
         return dummy.next
-            
 
 
-        
+
+    def reverseList(self, head):
+        temp = head
+        prev = None
+        while(temp):
+            nex = temp.next
+            temp.next = prev
+            prev = temp
+            temp = nex
+        # print(prev)
+        return prev
