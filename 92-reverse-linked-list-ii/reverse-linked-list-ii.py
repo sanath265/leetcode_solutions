@@ -45,11 +45,10 @@ class Solution:
     
     def reverseList(self, head):
             prev = None
-            temp = head
-            while(temp):
-                nex = temp.next
-                temp.next = prev
-                prev = temp
-                temp = nex
+            while(head):
+                nex = head.next
+                head.next = prev
+                prev = head
+                head = nex
             
             return prev
