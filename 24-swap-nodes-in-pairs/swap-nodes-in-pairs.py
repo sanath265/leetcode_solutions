@@ -9,24 +9,36 @@ class Solution:
         dummy = ListNode(0)
         dummy.next = head
 
-        prev = dummy
         temp = head
+        
+        prev = dummy
+        while(temp and (temp and temp.next)):
+            curr = temp
+            end = temp.next
+            tail = temp.next.next
 
-        while(temp and temp.next):
-            temp1 = temp.next
-            end = temp1.next if temp1.next else None
-            temp1.next = None
-            
-            currNext = temp.next
-            temp.next = prev
-            currNext.next = temp
-            prev.next = currNext
-            temp.next = end
+            end.next = None
+            prev.next = None
 
+            rev = self.reverseList(curr)
 
-            if temp.next and temp.next.next:
-                prev = temp
-                temp = temp.next
-            else:
-                temp = temp.next
+            prev.next = end
+            curr.next = tail
+
+            prev = curr
+            temp = tail
         return dummy.next
+
+    
+    def reverseList(self, head):
+        prev = None
+
+        while(head):
+            nex = head.next
+            head.next = prev
+            prev = head
+            head = nex
+        
+        return prev
+            
+
