@@ -6,23 +6,22 @@
 #         self.right = right
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        c = 0
-
-        if root is None:
-            return 0
         
-        c = max(c, self.depth(root.left) + self.depth(root.right), self.diameterOfBinaryTree(root.left), self.diameterOfBinaryTree(root.right))
+        diameter = 0
 
-        return c
-        
-    @lru_cache(maxsize=None)
-    def depth(self, root):
+        def findMax(root):
+            nonlocal diameter
 
-        c = 0
+            if root is None:
+                return 0
+            
+            l = findMax(root.left)
+            r = findMax(root.right)
 
-        if root is None:
-            return 0
-        
-        c += 1 + max(self.depth(root.left), self.depth(root.right))
+            diameter = max(diameter, l + r)
 
-        return c
+            return 1 + max(l, r)
+
+        findMax(root)
+
+        return diameter
