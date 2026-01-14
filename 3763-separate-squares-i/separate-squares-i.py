@@ -1,35 +1,46 @@
-class Solution:
+class Solution(object):
     def separateSquares(self, squares):
-        total_area = 0
-        events = []
+        """
+        :type squares: List[List[int]]
+        :rtype: float
+        """
 
-        for sq in squares:
-            y, l = sq[1], sq[2]
-            total_area += l * l
-            events.append((y, l, 1))
-            events.append((y + l, l, -1))
+        # def check():
 
-        # sort by y-coordinate
-        events.sort(key=lambda x: x[0])
+        
+        ySquares = []
+        totalArea = 0
+        for i in squares:
+            ySquares.append([i[1], i[1] + i[2], i[2]])
+            totalArea += (i[2] ** 2)
 
-        covered_width = (
-            0.0  # sum of all bottom edges under the current scanning line
-        )
-        curr_area = 0.0  # current cumulative area
-        prev_height = 0.0  # height of the previous scanning line
+        ySquares.sort(key = lambda x: x[1])
 
-        for y, l, delta in events:
-            diff = y - prev_height
-            # additional area between two scanning lines
-            area = covered_width * diff
-            # if this part of the area exceeds more than half of the total area
-            if 2 * (curr_area + area) >= total_area:
-                return prev_height + (total_area - 2 * curr_area) / (
-                    2 * covered_width
-                )
-            # update width: add width at the start event, subtract width at the end event
-            covered_width += delta * l
-            curr_area += area
-            prev_height = y
+        print(totalArea)
+        above = 0
+        below = float(totalArea)
 
-        return 0.0
+        b = 0
+        a = ySquares[-1][1]
+        while(abs(b-a) > 10**(-5)): 
+            mid = (b + a) / 2.0
+            i = 0
+            below = 0.0
+            while(i < len(squares)):
+                val = ySquares[i]
+                if val[1] <= mid:
+                    below += val[2] ** 2
+                elif val[0] <= mid < val[1]:
+                    below += val[2] * (mid - val[0])
+                
+                i+=1
+            
+            above = totalArea - below
+                
+            if below >= totalArea/2.0:
+                a = mid
+            else:
+                b = mid
+            print(mid, b, a, below, above)
+
+        return (b+a)/2.0
