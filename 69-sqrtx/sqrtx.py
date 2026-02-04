@@ -16,4 +16,4 @@ class Solution:
             else:
                 right = mid - 1
         print(ans)
-        return ans
+        return left - 1
