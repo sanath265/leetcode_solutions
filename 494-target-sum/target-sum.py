@@ -4,7 +4,7 @@ class Solution:
         # c = 0
         dp = {}
 
-        def dfs(i, target, chain):
+        def dfs(i, target):
 
             c = 0
 
@@ -16,13 +16,13 @@ class Solution:
                     return 1
                 return c
 
-            c += dfs(i+1, target - nums[i], chain + "+")
-            c += dfs(i+1, target + nums[i], chain + "-")
+            c += dfs(i+1, target - nums[i])
+            c += dfs(i+1, target + nums[i])
 
             dp[(i, target)] = c
 
             return c
 
-        return dfs(0, target, "")
+        return dfs(0, target)
         #  c
         
