@@ -19,7 +19,7 @@ class Solution:
                 l1 += 1
             else:
                 l2 += 1
-        print(l1, l2)
+        # print(l1, l2)
         
         
         if l1 + 1 == len(nums1):
@@ -29,7 +29,7 @@ class Solution:
             ans += nums1[l1 + 1]
             l1 += 1
         else:
-            print("s")
+            # print("s")
             if nums2[l2 + 1] < nums1[l1 + 1]:
                 ans = nums2[l2 + 1]
                 l2 += 1
@@ -37,7 +37,7 @@ class Solution:
                 ans = nums1[l1 + 1]
                 l1 += 1
         
-        print(ans)
+        # print(ans)
         if total %2 == 0:
             if l1 + 1 == len(nums1):
                 ans += nums2[l2 + 1]
