@@ -1,6 +1,8 @@
 class Solution:
     def validTree(self, n: int, edges: List[List[int]]) -> bool:
-
+        
+        if len(edges) != n-1:
+            return False
         visited = [0 for _ in range(n)]
 
         adj = [[] for _ in range(n)]
