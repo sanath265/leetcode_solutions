@@ -10,32 +10,29 @@ class Solution:
                 adj[a].append(b)
         
         dp = {}
-        def cycle(i, visited, pathvisted):
-            if i in dp:
-                return dp[i]
-            if i in pathvisted and pathvisted[i] == 1:
-                dp[i] = True
-                return True
+        def cycle(i, visited):
+            if i in visited:
+                if visited[i] == 1:
+                    return True
+                elif visited[i] == 2:
+                    return False
             
             visited[i] = 1
-            pathvisted[i] = 1
 
             if i not in adj:
-                pathvisted[i] = 0
-                dp[i] = False
+                visited[i] = 2
                 return False
                 
             for node in adj[i]:
-                if cycle(node, visited, pathvisted):
-                    dp[i] = True
+                if cycle(node, visited):
                     return True
-            pathvisted[i] = 0
+            visited[i] = 2
             
-            dp[i] = False
             return False
         
+        visted = {}
         for i in range(numCourses):
-            if cycle(i, {}, {}):
+            if cycle(i,visted):
                 return False
         
         return True
