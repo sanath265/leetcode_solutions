@@ -80,7 +80,6 @@ class LFUCache:
         node.prev = None
         node.next = None
         nex = self.freq[freq].head.next
-        nex.prev = None
         self.freq[freq].head.next = node
         node.prev = self.freq[freq].head
         node.next = nex
