@@ -10,21 +10,30 @@ class Solution:
 
         ans = float("inf")
 
-        q = deque()
-        q.append([0, 0, 1])
-        visited = set()
-        while q:
-            i, j, count = q.popleft()
+        heap = []
+        heapq.heappush(heap, [1, 0,0])
+        
+        dist = [[float("inf") for _ in range(col)] for _ in range(row)]
+        dist[0][0] = 1
 
-            if (i, j) in visited:
-                continue
+        while heap:
+            cost, i, j = heapq.heappop(heap)
+
+            # if dist[i][j] < cost:
+            #     continue
 
             if i == row-1 and j == col-1:
-                return count
+                return cost
                 
-            visited.add((i, j))
-            if i >= 0 and j >=0 and i < row and j < col and grid[i][j]==0:
-                for x, y in directions:
-                    q.append([i+x, j+y, count + 1])
+            dist[i][j] = cost
+            for x, y in directions:
+                ni = i+x
+                nj = j + y
+                if ni >= 0 and nj >=0 and ni < row and nj < col and grid[ni][nj]==0:
+                    new_cost = cost + 1
+
+                    if new_cost < dist[ni][nj]:
+                        dist[ni][nj] = new_cost
+                        heapq.heappush(heap, (new_cost, ni, nj))
         
         return -1
