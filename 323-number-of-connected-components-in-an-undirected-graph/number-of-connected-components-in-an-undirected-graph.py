@@ -17,7 +17,8 @@ class Solution:
             visited[node] = 1
 
             for neigh in adj[node]:
-                dfs(neigh)
+                if not visited[neigh]:
+                    dfs(neigh)
         
         count = 0
         for i in range(n):
