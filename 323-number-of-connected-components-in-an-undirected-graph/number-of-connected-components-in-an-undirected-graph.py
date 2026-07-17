@@ -5,23 +5,24 @@ class Solution:
 
         adj = [[] for _ in range(n)]
 
-        for a, b in edges:
-            adj[a].append(b)
-            adj[b].append(a)
+        for u,v in edges:
+            adj[u].append(v)
+            adj[v].append(u)
         
-        def dfs(i):
-            if visited[i]:
+
+        def dfs(node):
+            if visited[node] == 1:
                 return
             
-            visited[i] = 1
+            visited[node] = 1
 
-            for i in adj[i]:
-                dfs(i)
+            for neigh in adj[node]:
+                dfs(neigh)
         
         count = 0
         for i in range(n):
-            if not visited[i]:
-                count+=1
+            if visited[i] == 0:
                 dfs(i)
+                count += 1
+        
         return count
-
