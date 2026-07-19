@@ -1,38 +1,35 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        
         row = len(grid)
         col = len(grid[0])
+        directions = [[1,0], [-1, 0], [0, 1], [0, -1]]
 
-        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+        ans = 0
 
-        def bfs(q):
-            ans = 0
-            while(q):
-                i, j, count = q.popleft()
+        q = deque([])
 
-                if i >= 0 and j >= 0 and i < row and j < col and grid[i][j] != 0 and grid[i][j] != 2:
-                    grid[i][j] = 2
-                    ans = count
-
-                    for x, y in directions:
-                        q.append((i+x, j+y, count +1))
-            return ans
-        
-        q = deque()
         for i in range(row):
             for j in range(col):
                 if grid[i][j] == 2:
-                    grid[i][j] = 1
                     q.append((i, j, 0))
-        ans = bfs(q)
+        
+        
+        while(q):
+            i, j, count = q.popleft()
+            
+            for m, n in directions:
+                ni = i + m
+                nj = j + n
+
+                if 0 <= ni < row and 0 <= nj < col and grid[ni][nj] == 1:
+                    grid[ni][nj] = 2
+                    q.append((ni, nj, count + 1))
+                    ans = max(ans, count+1)
+        
         for i in range(row):
             for j in range(col):
                 if grid[i][j] == 1:
                     return -1
+        
         return ans
-
-        
-        
-
         
