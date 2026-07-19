@@ -13,24 +13,22 @@ class Solution:
         for i in range(row):
             for j in range(col):
                 if mat[i][j] == 0:
+                    ans[i][j] = 0
                     q.append((i, j, 0))
 
         while q:
             i, j, count = q.popleft()
-            mat[i][j] = -1
             for m,n in directions:
                 ni = i+m
                 nj = j + n
     
-                if 0<=ni<row and 0<=nj<col:
-                    if mat[ni][nj] == 1:
-                        ans[ni][nj] = min(ans[ni][nj], count + 1)
-                    if mat[ni][nj] != -1:
-                        q.append((ni, nj, count + 1))
+                if 0<=ni<row and 0<=nj<col and ans[ni][nj] == float('inf'):
+                        ans[ni][nj] = ans[i][j] + 1
+                        q.append((ni, nj, ans[ni][nj]))
         
-        for i in range(row):
-            for j in range(col):
-                if ans[i][j] == float('inf'):
-                    ans[i][j] = 0
+        # for i in range(row):
+        #     for j in range(col):
+        #         if ans[i][j] == float('inf'):
+        #             ans[i][j] = 0
         return ans
 
